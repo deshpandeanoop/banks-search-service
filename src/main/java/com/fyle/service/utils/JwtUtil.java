@@ -13,7 +13,9 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-    private String SECRET_KEY = "SECRET_KEY";
+    // For simplicity and development purposes, cryptographic hash has been hardcoded. But in production, it must be stored in
+    // secured location(To avoid the access of the key, secure location should not be the code repository)
+    private String SECRET_KEY = "e7e27e49b3bd784ea4918297a78bb3f7";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
