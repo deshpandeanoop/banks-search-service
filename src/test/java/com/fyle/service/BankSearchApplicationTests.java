@@ -20,39 +20,39 @@ public class BankSearchApplicationTests {
     private final TestRestTemplate restTemplate = new TestRestTemplate();
 
     @Test
-    public void test1() throws Exception{
+    public void Given_ValidCredentials_AuthenticateAPI_Should_Return_Ok_Response() throws Exception{
         ResponseEntity<JwtToken> response = restTemplate.postForEntity(createAbsoluteUri("/authenticate"),
                 new AuthenticationRequest("fyle", "fyle"), JwtToken.class);
         assertTrue(response.getStatusCode().is2xxSuccessful());
     }
 
     @Test
-    public void test2(){
+    public void Given_InValidCredentials_AuthenticateAPI_Should_Return_4x_Response(){
         ResponseEntity<String> response = restTemplate.postForEntity(createAbsoluteUri("/authenticate"),
                 new AuthenticationRequest("invalid_user_name","invalid_password"), String.class);
         assertTrue(response.getStatusCode().is4xxClientError());
     }
 
     @Test
-    public void test3(){
+    public void Given_NoJwtToken_BanksDetailsApi_Should_Return_4x_Response(){
         ResponseEntity<String> response = restTemplate.getForEntity(createAbsoluteUri("/banks/ABHY0065001"), String.class);
         assertTrue(response.getStatusCode().is4xxClientError());
     }
 
     @Test
-    public void test4(){
+    public void Given_Valid_Jwt_Header_BankDetailsApi_Should_Return_Ok_Response(){
         ResponseEntity<String> response = restTemplate.exchange(createAbsoluteUri("/banks/ABHY0065001"), HttpMethod.GET, constructHttpEntityWithAuthorizationHeaders(), String.class);
         assertTrue(response.getStatusCode().is2xxSuccessful());
     }
 
     @Test
-    public void test5(){
+    public void Given_NoJwtToken_BranchDetailsApi_Should_Return_4x_Response(){
         ResponseEntity<String> response = restTemplate.getForEntity(createAbsoluteUri("/banks/ABHYUDAYA COOPERATIVE BANK LIMITED/branches/MUMBAI?offset=12&limit=50"), String.class);
         assertTrue(response.getStatusCode().is4xxClientError());
     }
 
     @Test
-    public void test6(){
+    public void Given_Valid_Jwt_Header_BranchDetailsApi_Should_Return_Ok_Response(){
         ResponseEntity<String> response = restTemplate.exchange(createAbsoluteUri("/banks/ABHYUDAYA COOPERATIVE BANK LIMITED/branches/MUMBAI?offset=12&limit=50"), HttpMethod.GET, constructHttpEntityWithAuthorizationHeaders(), String.class);
         assertTrue(response.getStatusCode().is2xxSuccessful());
     }
