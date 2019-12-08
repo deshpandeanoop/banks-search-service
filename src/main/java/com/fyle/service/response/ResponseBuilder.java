@@ -21,4 +21,11 @@ public final class ResponseBuilder {
         response.setBranches(branches);
         return response;
     }
+
+    public static BaseResponse buildBaseResponse(Integer code, String message){
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setErrorCode(code);
+        baseResponse.setMessage(message);
+        return baseResponse;
+    }
 }
