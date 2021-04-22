@@ -1,2 +1,2 @@
 # banks-search-service
- Banks search application..
+ Banks search application!
